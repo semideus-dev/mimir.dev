@@ -1,11 +1,15 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { authClient } from "@/lib/auth-client";
+
+import SocialAuth from "@/modules/auth/ui/components/social-auth";
 import {
   Form,
   FormControl,
@@ -21,7 +25,9 @@ import {
   EyeOffIcon,
   GithubIcon,
   GoogleIcon,
+  LoadingIcon,
 } from "@/components/icons";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   username: z
@@ -34,6 +40,9 @@ const formSchema = z.object({
 
 export default function SignUpForm() {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
+  const [pending, setPending] = React.useState(false);
+
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,7 +54,25 @@ export default function SignUpForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    setPending(true);
+    authClient.signUp.email(
+      {
+        email: values.email,
+        password: values.password,
+        name: values.username,
+      },
+      {
+        onError: ({ error }) => {
+          setPending(false);
+          toast.error(error.message || "An error occurred. Please try again.");
+        },
+        onSuccess: () => {
+          setPending(false);
+          router.push("/dashboard");
+          toast.success("Signed up successfully!");
+        },
+      }
+    );
   }
 
   function toggleVisibility() {
@@ -113,25 +140,17 @@ export default function SignUpForm() {
         />
         <Button
           type="submit"
+          disabled={pending}
           className="w-full font-semibold uppercase tracking-wide rounded-full"
         >
-          sign up
+          {pending ? <LoadingIcon className="animate-spin" /> : "sign up"}
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
             OR
           </span>
         </div>
-        <div className="grid md:grid-cols-2 gap-2">
-          <Button type="button" variant="outline">
-            <GoogleIcon />
-            Continue with Google
-          </Button>
-          <Button type="button" variant="outline">
-            <GithubIcon />
-            Continue with Github
-          </Button>
-        </div>
+        <SocialAuth />
       </form>
     </Form>
   );

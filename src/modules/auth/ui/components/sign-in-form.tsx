@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import SocialAuth from "@/modules/auth/ui/components/social-auth";
 import {
   Form,
   FormControl,
@@ -16,12 +17,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  EyeIcon,
-  EyeOffIcon,
-  GithubIcon,
-  GoogleIcon,
-} from "@/components/icons";
+import { EyeIcon, EyeOffIcon, LoadingIcon } from "@/components/icons";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email."),
@@ -30,6 +28,7 @@ const formSchema = z.object({
 
 export default function SignInForm() {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
+  const [pending, setPending] = React.useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,7 +39,24 @@ export default function SignInForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    setPending(true);
+    authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+        callbackURL: "/dashboard",
+      },
+      {
+        onError: ({ error }) => {
+          setPending(false);
+          toast.error(error.message || "An error occurred. Please try again.");
+        },
+        onSuccess: () => {
+          setPending(false);
+          toast.success("Signed in successfully!");
+        },
+      }
+    );
   }
 
   function toggleVisibility() {
@@ -95,25 +111,18 @@ export default function SignInForm() {
         />
         <Button
           type="submit"
+          disabled={pending}
           className="w-full font-semibold uppercase tracking-wide rounded-full"
         >
-          sign in
+          {pending ? <LoadingIcon className="animate-spin" /> : "sign in"}
+
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
             OR
           </span>
         </div>
-        <div className="grid md:grid-cols-2 gap-2">
-          <Button type="button" variant="outline">
-            <GoogleIcon />
-            Continue with Google
-          </Button>
-          <Button type="button" variant="outline">
-            <GithubIcon />
-            Continue with Github
-          </Button>
-        </div>
+        <SocialAuth />
       </form>
     </Form>
   );
