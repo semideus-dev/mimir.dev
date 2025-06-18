@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const font = Figtree({
@@ -28,6 +29,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
