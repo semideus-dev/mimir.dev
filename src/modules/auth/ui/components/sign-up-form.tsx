@@ -128,7 +128,6 @@ export default function SignUpForm() {
                     onClick={toggleVisibility}
                     aria-label={isVisible ? "Hide password" : "Show password"}
                     aria-pressed={isVisible}
-                    aria-controls="password"
                   >
                     {isVisible ? <EyeIcon /> : <EyeOffIcon />}
                   </button>
