@@ -1,62 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import {
-  AgentsIcon,
-  BillingIcon,
-  DashboardIcon,
-  MeetingIcon,
-  SettingsIcon,
-  SignOutIcon,
-} from "@/components/icons";
+
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-const headerItems = [
-  {
-    title: "Dashboard",
-    link: "/dashboard",
-    icon: DashboardIcon,
-  },
-  {
-    title: "Agents",
-    link: "/agents",
-    icon: AgentsIcon,
-  },
-  {
-    title: "Meetings",
-    link: "/meetings",
-    icon: MeetingIcon,
-  },
-  {
-    title: "Billing",
-    link: "/billing",
-    icon: BillingIcon,
-  },
-];
-
-const footerItems = [
-  {
-    title: "Settings",
-    link: "/settings",
-    icon: SettingsIcon,
-  },
-  {
-    title: "Sign Out",
-    link: "#",
-    icon: SignOutIcon,
-  },
-];
+import { headerItems, footerItems } from "@/lib/constants";
+import SignOutButton from "@/modules/auth/ui/components/sign-out-button";
 
 export default function AppSidebar() {
   return (
@@ -94,6 +51,7 @@ export default function AppSidebar() {
                   <item.icon />
                 </Link>
               ))}
+              <SignOutButton />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

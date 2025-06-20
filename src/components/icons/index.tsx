@@ -230,7 +230,6 @@ export function SignOutIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-
 export function SearchIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -251,3 +250,4 @@ export function SearchIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
