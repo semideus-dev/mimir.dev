@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import CustomAvatar from "@/components/custom/custom-avatar";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";    
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
@@ -28,6 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
+import { LoadingIcon } from "@/components/icons";
 
 interface AgentFormProps {
   onSuccess: () => void;
@@ -127,7 +128,13 @@ export default function AgentForm({
             Cancel
           </Button>
           <Button disabled={isPending} type="submit">
-            {isEdit ? "Update" : "Create"}
+            {isPending ? (
+              <LoadingIcon className="animate-spin" />
+            ) : isEdit ? (
+              "Update"
+            ) : (
+              "Create"
+            )}
           </Button>
         </div>
       </form>

@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorIcon } from "@/components/icons";
 
-export function AgentsGridErrorView() {
+export function AgentsTableErrorView() {
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       <ErrorIcon width={60} height={60} className="text-rose-400" />
