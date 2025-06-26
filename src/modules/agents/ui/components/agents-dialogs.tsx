@@ -1,7 +1,7 @@
 import React from "react";
 
 import CustomDialog from "@/components/custom/custom-dialog";
-import AgentForm from "@/modules/agents/ui/components/agent-form";
+import AgentForm from "@/modules/agents/ui/components/agents-form";
 
 interface NewAgentDialogProps {
   open: boolean;

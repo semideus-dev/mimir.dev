@@ -25,9 +25,11 @@ export const columns: ColumnDef<AgentGetOne>[] = [
         />
         <div className="flex flex-col">
           <span className="text-lg font-semibold">{row.original.name}</span>
-          <div className="text-muted-foreground hidden max-w-[200px] items-center gap-x-[1px] truncate text-sm md:flex">
+          <div className="text-muted-foreground hidden items-center gap-x-[1px] md:flex">
             <DownRightIcon />
-            <span>{row.original.instructions}</span>
+            <span className="max-w-[200px] truncate text-sm">
+              {row.original.instructions}
+            </span>
           </div>
         </div>
       </div>
@@ -38,8 +40,8 @@ export const columns: ColumnDef<AgentGetOne>[] = [
     header: "Meeting Count",
     cell: () => (
       <div className="flex w-full justify-end">
-        <div className="bg-muted/50 flex w-fit items-center gap-1 rounded-xl p-1 px-3 font-medium">
-          <MeetingIcon className="text-primary" width={20} height={20} />
+        <div className="border flex w-fit items-center gap-1 rounded-xl p-1 px-3 font-medium">
+          <MeetingIcon className="text-primary mr-1" width={20} height={20} />
           <span>5</span>
           <span>meetings</span>
         </div>
