@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
 
-import { SignUpView } from "@/modules/auth/ui";
+import SignUpView from "@/modules/auth/ui/views/sign-up-view";
 
 export const metadata: Metadata = {
   title: "Mimir - Sign Up",

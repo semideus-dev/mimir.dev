@@ -1,18 +1,14 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
 import type { AgentGetOne } from "@/modules/agents/utils/types";
+
+import { ColumnDef } from "@tanstack/react-table";
+
 import CustomAvatar from "@/components/custom/custom-avatar";
+
 import { DownRightIcon, MeetingIcon } from "@/components/icons";
 
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
-
-export const columns: ColumnDef<AgentGetOne>[] = [
+const AgentsTableColumns: ColumnDef<AgentGetOne>[] = [
   {
     accessorKey: "name",
     header: "Agent",
@@ -49,3 +45,5 @@ export const columns: ColumnDef<AgentGetOne>[] = [
     ),
   },
 ];
+
+export default AgentsTableColumns

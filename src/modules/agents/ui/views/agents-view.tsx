@@ -6,16 +6,20 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { useAgentsFilter } from "@/modules/agents/hooks/use-agents-filters";
-import AgentsSearchFilter from "@/modules/agents/ui/components/agents-search-filter";
 
-import { DataTable } from "@/modules/agents/ui/components/data-table";
-import { columns } from "@/modules/agents/ui/components/columns";
 import { pagination } from "@/lib/constants";
-import { Button } from "@/components/ui/button";
-import { XIcon } from "lucide-react";
-import AgentsPagination from "./agents-pagination";
 
-export default function AgentsTable() {
+import { DataTable } from "@/components/custom/data-table";
+
+import AgentsSearchFilter from "@/modules/agents/ui/components/filters/agents-search-filter";
+import AgentsPagination from "@/modules/agents/ui/components/filters/agents-pagination";
+import AgentsTableColumns from "@/modules/agents/ui/components/agents-table-columns";
+
+import { Button } from "@/components/ui/button";
+
+import { XIcon } from "lucide-react";
+
+export default function AgentsView() {
   const [filters, setFilters] = useAgentsFilter();
 
   const isAnyFilterModified = !!filters.search;
@@ -46,7 +50,7 @@ export default function AgentsTable() {
           </Button>
         )}
       </div>
-      <DataTable data={data.items} columns={columns} />
+      <DataTable data={data.items} columns={AgentsTableColumns} />
       <AgentsPagination
         page={filters.page}
         totalPages={data.totalPages}

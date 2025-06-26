@@ -48,7 +48,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                Create your first agent to schedule a meeting.
+                No results found.
               </TableCell>
             </TableRow>
           )}
