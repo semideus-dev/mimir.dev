@@ -7,15 +7,20 @@ import { db } from "@/lib/db";
 import { agents } from "@/lib/db/schema";
 import { agentsInsertSchema } from "@/modules/agents/utils/schemas";
 import { pagination } from "@/lib/constants";
+import { TRPCError } from "@trpc/server";
 
 export const agentsRouter = createTRPCRouter({
   getOne: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const [agent] = await db
         .select()
         .from(agents)
-        .where(eq(agents.id, input.id));
+        .where(and(eq(agents.id, input.id), eq(agents.userId, ctx.userId)));
+
+      if (!agent) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Agent no found." });
+      }
 
       return agent;
     }),

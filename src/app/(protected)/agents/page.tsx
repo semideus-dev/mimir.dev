@@ -13,7 +13,7 @@ import { AgentsTableErrorView } from "@/components/custom/error-views";
 import { AgentsTableLoadingView } from "@/components/custom/loading-views";
 
 import AgentsView from "@/modules/agents/ui/views/agents-view";
-import AgentHeader from "@/modules/agents/ui/components/agents-header";
+import { AgentHeader } from "@/modules/agents/ui/components/agents-headers";
 
 export const metadata: Metadata = {
   title: "Mimir - Agents",
