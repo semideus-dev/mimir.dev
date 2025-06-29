@@ -85,7 +85,7 @@ export default function AgentForm({
   const isPending = createAgent.isPending || updateAgent.isPending;
 
   function onSubmit(values: z.infer<typeof agentsInsertSchema>) {
-    if (isEdit) {
+    if (isEdit && initialValues?.id) {
       updateAgent.mutate({ ...values, id: initialValues.id });
     } else {
       createAgent.mutate(values);

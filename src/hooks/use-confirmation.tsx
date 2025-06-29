@@ -18,6 +18,7 @@ export default function useConfirmation(
   }
 
   function handleClose() {
+    promise?.resolve(false);
     setPromise(null);
   }
 
