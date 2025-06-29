@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import React from "react";
 
 import { AgentGetOne } from "@/modules/agents/utils/types";
@@ -41,8 +39,6 @@ export default function AgentForm({
   onCancel,
   initialValues,
 }: AgentFormProps) {
-  const router = useRouter();
-
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 
@@ -51,12 +47,24 @@ export default function AgentForm({
       onSuccess: () => {
         queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
 
+        onSuccess?.();
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    }),
+  );
+
+  const updateAgent = useMutation(
+    trpc.agents.update.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}));
+
         if (initialValues?.id) {
           queryClient.invalidateQueries(
             trpc.agents.getOne.queryOptions({ id: initialValues.id }),
           );
         }
-
         onSuccess?.();
       },
       onError: (error) => {
@@ -74,11 +82,11 @@ export default function AgentForm({
   });
 
   const isEdit = !!initialValues?.id;
-  const isPending = createAgent.isPending;
+  const isPending = createAgent.isPending || updateAgent.isPending;
 
   function onSubmit(values: z.infer<typeof agentsInsertSchema>) {
     if (isEdit) {
-      console.log("edit agent");
+      updateAgent.mutate({ ...values, id: initialValues.id });
     } else {
       createAgent.mutate(values);
     }
@@ -118,16 +126,23 @@ export default function AgentForm({
             </FormItem>
           )}
         />
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-end gap-2">
           <Button
             variant="ghost"
+            className="rounded-full border font-semibold tracking-wide uppercase"
+            size="sm"
             disabled={isPending}
             type="button"
             onClick={() => onCancel()}
           >
             Cancel
           </Button>
-          <Button disabled={isPending} type="submit">
+          <Button
+            disabled={isPending}
+            className="rounded-full border font-semibold tracking-wide uppercase"
+            size="sm"
+            type="submit"
+          >
             {isPending ? (
               <LoadingIcon className="animate-spin" />
             ) : isEdit ? (

@@ -5,7 +5,10 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
 import { db } from "@/lib/db";
 import { agents } from "@/lib/db/schema";
-import { agentsInsertSchema } from "@/modules/agents/utils/schemas";
+import {
+  agentsInsertSchema,
+  agentsUpdateSchema,
+} from "@/modules/agents/utils/schemas";
 import { pagination } from "@/lib/constants";
 import { TRPCError } from "@trpc/server";
 
@@ -81,5 +84,36 @@ export const agentsRouter = createTRPCRouter({
         .returning();
 
       return createdAgent;
+    }),
+  update: protectedProcedure
+    .input(agentsUpdateSchema)
+    .mutation(async ({ ctx, input }) => {
+      const [agent] = await db
+        .update(agents)
+        .set(input)
+        .where(and(eq(agents.id, input.id), eq(agents.userId, ctx.userId)))
+        .returning();
+
+      if (!agent) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Agent not found",
+        });
+      }
+      return agent;
+    }),
+  remove: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const [agent] = await db
+        .delete(agents)
+        .where(and(eq(agents.id, input.id), eq(agents.userId, ctx.userId)))
+        .returning();
+
+      if (!agent) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" });
+      }
+
+      return agent;
     }),
 });
