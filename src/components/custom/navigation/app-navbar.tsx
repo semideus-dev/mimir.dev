@@ -22,12 +22,13 @@ import Link from "next/link";
 import SignOutButton, {
   SignOutDialog,
 } from "@/modules/auth/ui/components/sign-out-button";
+import { getPageTitle } from "@/lib/utils";
 
 export default function AppNavbar() {
   const isMobile = useIsMobile();
 
   const pathname = usePathname();
-  const title = pathname.slice(1).charAt(0).toUpperCase() + pathname.slice(2);
+  const title = getPageTitle(pathname);
 
   const navItems = headerItems.concat(footerItems);
 
