@@ -14,6 +14,7 @@ import {
   ErrorIcon,
   LoadingIcon,
   ScheduleIcon,
+  ActiveIcon,
   ClockIcon,
 } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
@@ -29,7 +30,7 @@ function formatDuration(seconds: number) {
 
 const statusIconMap = {
   upcoming: ScheduleIcon,
-  active: LoadingIcon,
+  active: ActiveIcon,
   completed: CheckIcon,
   processing: LoadingIcon,
   cancelled: ErrorIcon,
@@ -56,7 +57,7 @@ const MeetingsTableColumns: ColumnDef<MeetingGetMany[number]>[] = [
         />
         <div className="flex flex-col">
           <span className="text-lg font-semibold">{row.original.name}</span>
-          <div className="text-muted-foreground hidden items-center gap-x-[1px] md:flex">
+          <div className="text-muted-foreground items-center gap-x-[1px] flex">
             <DownRightIcon />
             <span className="max-w-[200px] text-sm">
               {row.original.agent.name}
@@ -73,7 +74,7 @@ const MeetingsTableColumns: ColumnDef<MeetingGetMany[number]>[] = [
       const Icon =
         statusIconMap[row.original.status as keyof typeof statusIconMap];
       return (
-        <div className="flex items-center justify-end gap-x-1">
+        <div className="hidden md:flex items-center justify-end gap-x-1">
           <Badge
             variant="outline"
             className={cn(
@@ -85,7 +86,6 @@ const MeetingsTableColumns: ColumnDef<MeetingGetMany[number]>[] = [
           >
             <Icon
               className={cn(
-                "text-lg",
                 row.original.status === "processing" && "animate-spin",
               )}
             />

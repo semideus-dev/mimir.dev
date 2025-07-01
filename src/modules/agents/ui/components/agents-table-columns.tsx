@@ -35,7 +35,7 @@ const AgentsTableColumns: ColumnDef<AgentGetMany[number]>[] = [
     accessorKey: "meetingCount",
     header: "Meeting Count",
     cell: () => (
-      <div className="flex w-full justify-end">
+      <div className="hidden w-full justify-end md:flex">
         <div className="flex w-fit items-center gap-1 rounded-xl border p-1 px-3 font-medium">
           <MeetingIcon className="text-primary mr-1" width={20} height={20} />
           <span>5</span>

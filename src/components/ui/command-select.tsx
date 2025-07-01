@@ -35,14 +35,19 @@ export default function CommandSelect({
   const [open, setOpen] = React.useState(false);
   const selectedOption = options.find((option) => option.value === value);
 
+  function handleOpenChange(value: boolean) {
+    onSearch?.("");
+    setOpen(value)
+  }
+
   return (
     <>
       <Button
         type="button"
-        variant="outline"
+        variant="ghost"
         onClick={() => setOpen(true)}
         className={cn(
-          "flex h-9 items-center justify-between px-2",
+          "flex h-9 items-center border justify-between px-2",
           className,
           !selectedOption && "text-muted-foreground",
         )}
@@ -53,7 +58,7 @@ export default function CommandSelect({
       <CustomCommandDialog
         shouldFilter={!onSearch}
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={handleOpenChange}
       >
         <CommandInput
           className="px-2 ring-0 focus:outline-none"

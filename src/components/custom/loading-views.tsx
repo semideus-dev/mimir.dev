@@ -20,7 +20,7 @@ export function MeetingsTableLoadingView() {
           <Skeleton className="bg-muted h-2 w-[200px] rounded-2xl" />
         </div>
       </div>
-      <div className="flex items-center gap-x-1">
+      <div className="hidden md:flex items-center gap-x-1">
         <Skeleton className="bg-muted h-5 w-24 rounded-xl" />
         <Skeleton className="bg-muted h-5 w-24 rounded-xl" />
       </div>
@@ -38,7 +38,7 @@ export function AgentsTableLoadingView() {
           <Skeleton className="bg-muted h-2 w-[200px] rounded-2xl" />
         </div>
       </div>
-      <Skeleton className="bg-muted h-5 w-24 rounded-2xl" />
+      <Skeleton className="hidden md:flex bg-muted h-5 w-24 rounded-2xl" />
     </div>
   );
 }

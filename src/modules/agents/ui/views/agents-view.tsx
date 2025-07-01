@@ -9,10 +9,10 @@ import { useAgentsFilter } from "@/modules/agents/hooks/use-agents-filters";
 
 import { DataTable } from "@/components/custom/data-table";
 
-import AgentsPagination from "@/modules/agents/ui/components/filters/agents-pagination";
 import AgentsTableColumns from "@/modules/agents/ui/components/agents-table-columns";
 
 import { useRouter } from "next/navigation";
+import DataPagination from "@/components/ui/data-pagination";
 
 export default function AgentsView() {
   const [filters, setFilters] = useAgentsFilter();
@@ -30,7 +30,7 @@ export default function AgentsView() {
         columns={AgentsTableColumns}
         onRowClick={(row) => router.push(`/agents/${row.id}`)}
       />
-      <AgentsPagination
+      <DataPagination
         page={filters.page}
         totalPages={data.totalPages}
         onPageChange={(page) => setFilters({ page })}
