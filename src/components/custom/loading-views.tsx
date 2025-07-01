@@ -10,6 +10,24 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
+export function MeetingsTableLoadingView() {
+  return (
+    <div className="flex items-center justify-between rounded-xl border p-4">
+      <div className="flex items-center gap-4">
+        <Skeleton className="size-11 rounded-full" />
+        <div className="flex flex-col gap-4">
+          <Skeleton className="bg-muted h-3 w-20 rounded-2xl" />
+          <Skeleton className="bg-muted h-2 w-[200px] rounded-2xl" />
+        </div>
+      </div>
+      <div className="flex items-center gap-x-1">
+        <Skeleton className="bg-muted h-5 w-24 rounded-xl" />
+        <Skeleton className="bg-muted h-5 w-24 rounded-xl" />
+      </div>
+    </div>
+  );
+}
+
 export function AgentsTableLoadingView() {
   return (
     <div className="flex items-center justify-between rounded-xl border p-4">

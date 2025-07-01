@@ -9,6 +9,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import MeetingsView from "@/modules/meetings/ui/views/meetings-view";
 import MeetingHeader from "@/modules/meetings/ui/components/meetings-headers";
 import { LoadingIcon } from "@/components/icons";
+import { MeetingsTableLoadingView } from "@/components/custom/loading-views";
 
 export const metadata: Metadata = {
   title: "Mimir - Meetings",
@@ -22,7 +23,7 @@ export default async function MeetingPage() {
     <>
       <MeetingHeader />
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <React.Suspense fallback={<LoadingIcon className="animate-spin" />}>
+        <React.Suspense fallback={<MeetingsTableLoadingView />}>
           <ErrorBoundary fallback={<LoadingIcon className="animate-spin" />}>
             <MeetingsView />
           </ErrorBoundary>
