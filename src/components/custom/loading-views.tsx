@@ -28,6 +28,35 @@ export function MeetingsTableLoadingView() {
   );
 }
 
+export function MeetingsDetailsLoadingView() {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                className="text-xl font-semibold md:text-3xl"
+                href="/meetings"
+              >
+                Your Meetings
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>
+                <Skeleton className="h-4 w-[200px] rounded-xl" />
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <Skeleton className="size-9" />
+      </div>
+      <Skeleton className="h-[100px] w-full rounded-xl" />
+    </div>
+  );
+}
+
 export function AgentsTableLoadingView() {
   return (
     <div className="flex items-center justify-between rounded-xl border p-4">

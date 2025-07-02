@@ -3,18 +3,23 @@ import React from "react";
 
 import CustomDialog from "@/components/custom/custom-dialog";
 import MeetingForm from "@/modules/meetings/ui/components/meetings-form";
-import { useRouter } from "next/navigation";
+import { MeetingGetOne } from "@/modules/meetings/utils/types";
 
 interface NewMeetingDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
+interface UpdateMeetingDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  initialValues: MeetingGetOne;
+}
+
 export function NewMeetingDialog({
   open,
   onOpenChange,
 }: NewMeetingDialogProps) {
-  const router = useRouter();
   return (
     <CustomDialog
       title="New Meeting"
@@ -25,9 +30,29 @@ export function NewMeetingDialog({
       <MeetingForm
         onSuccess={(id) => {
           onOpenChange(false);
-          router.push(`/meetings/${id}`);
         }}
         onCancel={() => onOpenChange(false)}
+      />
+    </CustomDialog>
+  );
+}
+
+export function UpdateMeetingDialog({
+  open,
+  onOpenChange,
+  initialValues,
+}: UpdateMeetingDialogProps) {
+  return (
+    <CustomDialog
+      title="Update Agent"
+      description="Edit the agent details"
+      open={open}
+      onOpenChange={onOpenChange}
+    >
+      <MeetingForm
+        onSuccess={() => onOpenChange(false)}
+        onCancel={() => onOpenChange(false)}
+        initialValues={initialValues}
       />
     </CustomDialog>
   );

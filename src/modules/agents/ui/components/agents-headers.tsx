@@ -86,7 +86,6 @@ interface AgentDetailsHeaderProps {
 
 export function AgentDetailsHeader({
   header,
-  agentId,
   onEdit,
   onRemove,
 }: AgentDetailsHeaderProps) {

@@ -14,8 +14,22 @@ import PageHeader from "@/components/custom/page-header";
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
-import { AddIcon } from "@/components/icons";
+import { AddIcon, EditIcon, SettingsIcon, TrashIcon } from "@/components/icons";
 import { XIcon } from "lucide-react";
 
 export default function MeetingHeader() {
@@ -72,5 +86,57 @@ export default function MeetingHeader() {
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </section>
+  );
+}
+
+interface MeetingDetailsHeaderProps {
+  header: string;
+  onEdit: () => void;
+  onRemove: () => void;
+}
+
+export function MeetingDetailsHeader({
+  header,
+  onEdit,
+  onRemove,
+}: MeetingDetailsHeaderProps) {
+  return (
+    <div className="flex items-center justify-between">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink
+              className="text-xl font-semibold md:text-3xl"
+              href="/meetings"
+            >
+              Your Meetings
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage className="text-xl font-semibold md:text-3xl">
+              {header}
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <Button className="border" variant="ghost" size="icon">
+            <SettingsIcon />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={onEdit}>
+            <EditIcon />
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={onRemove}>
+            <TrashIcon />
+            Remove
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }
