@@ -1,12 +1,12 @@
 import React from "react";
 
-import { useAgentsFilter } from "@/modules/agents/hooks/use-agents-filters";
+import { useMeetingsFilter } from "@/modules/meetings/hooks/use-meetings-filters";
 
 import { SearchIcon } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 
-export default function AgentsSearchFilter() {
-  const [filters, setFilters] = useAgentsFilter();
+export default function MeetingsSearchFilter() {
+  const [filters, setFilters] = useMeetingsFilter();
 
   return (
     <div className="relative">
