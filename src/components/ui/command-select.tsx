@@ -13,7 +13,7 @@ import {
 import { ChevronsUpDown } from "lucide-react";
 import { CommandInput } from "cmdk";
 
-interface CommandSelect {
+interface CommandSelectProps {
   value: string;
   placeholder?: string;
   isSearchable?: boolean;
@@ -31,7 +31,7 @@ export default function CommandSelect({
   options,
   onSelect,
   onSearch,
-}: CommandSelect) {
+}: CommandSelectProps) {
   const [open, setOpen] = React.useState(false);
   const selectedOption = options.find((option) => option.value === value);
 

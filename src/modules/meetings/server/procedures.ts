@@ -63,6 +63,12 @@ export const meetingsRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const { search, page, pageSize, status, agentId } = input;
+      const whereConditions = and(
+        eq(meetings.userId, ctx.userId),
+        search ? ilike(meetings.name, `%${search}%`) : undefined,
+        status ? eq(meetings.status, status) : undefined,
+        agentId ? eq(meetings.agentId, agentId) : undefined,
+      );
       const data = await db
         .select({
           ...getTableColumns(meetings),
@@ -73,14 +79,7 @@ export const meetingsRouter = createTRPCRouter({
         })
         .from(meetings)
         .innerJoin(agents, eq(meetings.agentId, agents.id))
-        .where(
-          and(
-            eq(meetings.userId, ctx.userId),
-            search ? ilike(meetings.name, `%${search}%`) : undefined,
-            status ? eq(meetings.status, status) : undefined,
-            agentId ? eq(meetings.agentId, agentId) : undefined,
-          ),
-        )
+        .where(whereConditions)
         .orderBy(desc(meetings.createdAt), desc(meetings.id))
         .limit(pageSize)
         .offset((page - 1) * pageSize);
@@ -89,14 +88,7 @@ export const meetingsRouter = createTRPCRouter({
         .select({ count: count() })
         .from(meetings)
         .innerJoin(agents, eq(meetings.agentId, agents.id))
-        .where(
-          and(
-            eq(meetings.userId, ctx.userId),
-            search ? ilike(meetings.name, `%${search}%`) : undefined,
-            status ? eq(meetings.status, status) : undefined,
-            agentId ? eq(meetings.agentId, agentId) : undefined,
-          ),
-        );
+        .where(whereConditions);
 
       const totalPages = Math.ceil(total.count / pageSize);
 

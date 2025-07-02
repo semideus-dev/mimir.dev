@@ -17,7 +17,7 @@ export default function MeetingsAgentFilter() {
 
   const trpc = useTRPC();
   const { data } = useQuery(
-    trpc.agents.getMany.queryOptions({ pageSize: 100, search: agentSearch }),
+    trpc.agents.getMany.queryOptions({ pageSize: 50, search: agentSearch }),
   );
   return (
     <CommandSelect

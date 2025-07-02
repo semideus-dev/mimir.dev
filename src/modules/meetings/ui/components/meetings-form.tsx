@@ -46,7 +46,7 @@ export default function MeetingForm({
   const [open, setOpen] = React.useState(false);
 
   const agents = useQuery(
-    trpc.agents.getMany.queryOptions({ pageSize: 100, search: agentSearch }),
+    trpc.agents.getMany.queryOptions({ pageSize: 50, search: agentSearch }),
   );
 
   const createMeeting = useMutation(

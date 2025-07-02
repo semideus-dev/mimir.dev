@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
-interface MeetingsVarientsProps {
+interface MeetingsVariantsProps {
   icon: React.ReactElement;
   title: string;
   description: string;
@@ -22,7 +22,7 @@ export default function MeetingsVariants({
   isUpcoming,
   isActive,
   onCancel,
-}: MeetingsVarientsProps) {
+}: MeetingsVariantsProps) {
   return (
     <div className="bg-card flex flex-col items-center justify-center gap-8 rounded-xl p-4 py-10">
       {icon}

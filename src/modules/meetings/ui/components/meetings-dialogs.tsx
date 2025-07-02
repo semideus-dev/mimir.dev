@@ -44,8 +44,8 @@ export function UpdateMeetingDialog({
 }: UpdateMeetingDialogProps) {
   return (
     <CustomDialog
-      title="Update Agent"
-      description="Edit the agent details"
+      title="Update Meeting"
+      description="Edit the meeting details"
       open={open}
       onOpenChange={onOpenChange}
     >
