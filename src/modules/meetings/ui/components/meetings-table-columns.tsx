@@ -37,11 +37,11 @@ const statusIconMap = {
 };
 
 const statusColorMap = {
-  upcoming: "bg-yellow-400/10 text-yellow-600 border-yellow-600",
-  active: "bg-primary/20 text-primary border-primary/5",
-  completed: "bg-green-500/20 text-green-800 border-green-800/5",
-  processing: "bg-zinc-500/20 text-zinv-800 border-zinv-800/5",
-  cancelled: "bg-rose-500/20 text-rose-800 border-rose-800/5",
+  upcoming: "bg-yellow-500/10 text-yellow-500 border-yellow-500",
+  active: "bg-primary/10 text-primary border-primary",
+  completed: "bg-green-500/10 text-green-500 border-green-500",
+  processing: "bg-zinc-500/10 text-zinc-500 border-zinc-500",
+  cancelled: "bg-rose-500/10 text-rose-500 border-rose-500",
 };
 
 const MeetingsTableColumns: ColumnDef<MeetingGetMany[number]>[] = [
@@ -74,7 +74,7 @@ const MeetingsTableColumns: ColumnDef<MeetingGetMany[number]>[] = [
       const Icon =
         statusIconMap[row.original.status as keyof typeof statusIconMap];
       return (
-        <div className="hidden md:flex items-center justify-end gap-x-1">
+        <div className="hidden items-center justify-end gap-x-1 md:flex">
           <Badge
             variant="outline"
             className={cn(
@@ -93,9 +93,9 @@ const MeetingsTableColumns: ColumnDef<MeetingGetMany[number]>[] = [
           </Badge>
           <Badge
             variant="outline"
-            className="flex items-center gap-x-2 text-base capitalize [&>svg]:size-4"
+            className="text-muted-foreground flex items-center gap-x-2 text-base capitalize [&>svg]:size-4"
           >
-            <ClockIcon className="text-primary" />
+            <ClockIcon  />
             {row.original.duration
               ? formatDuration(row.original.duration)
               : "No Duration"}
