@@ -1,4 +1,3 @@
-import { MeetingIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -9,6 +8,7 @@ interface MeetingsVariantsProps {
   title: string;
   description: string;
   meetingId: string;
+  className?: string;
   isUpcoming?: boolean;
   isActive?: boolean;
   onCancel?: () => void;
@@ -20,11 +20,17 @@ export default function MeetingsVariants({
   description,
   meetingId,
   isUpcoming,
+  className,
   isActive,
   onCancel,
 }: MeetingsVariantsProps) {
   return (
-    <div className="bg-card flex flex-col items-center justify-center gap-8 rounded-xl p-4 py-10">
+    <div
+      className={cn(
+        className,
+        "bg-card flex flex-col items-center justify-center gap-8 rounded-xl p-4 py-10",
+      )}
+    >
       {icon}
       <div className="flex flex-col items-center gap-2">
         <span className="text-2xl font-medium">{title}</span>
@@ -52,8 +58,7 @@ export default function MeetingsVariants({
         </div>
       )}
       {isActive && (
-        <div className="flex items-center justify-center ">
-          
+        <div className="flex items-center justify-center">
           <Button
             asChild
             className="rounded-full border font-semibold tracking-wide uppercase"

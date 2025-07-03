@@ -7,6 +7,9 @@ const env = {
 
   googleClientId: process.env.GOOGLE_CLIENT_ID,
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+
+  streamApiKey: process.env.NEXT_PUBLIC_STREAM_API_KEY,
+  streamSecret: process.env.NEXT_PUBLIC_STREAM_SECRET,
 };
 
 export default env;

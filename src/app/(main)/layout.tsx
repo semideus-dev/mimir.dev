@@ -5,7 +5,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/custom/navigation/app-sidebar";
 import AppNavbar from "@/components/custom/navigation/app-navbar";
 
-export default async function ProtectedLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
