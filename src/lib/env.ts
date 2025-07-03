@@ -10,6 +10,8 @@ const env = {
 
   streamApiKey: process.env.NEXT_PUBLIC_STREAM_API_KEY,
   streamSecret: process.env.NEXT_PUBLIC_STREAM_SECRET,
+
+  openAiApiKey: process.env.OPEN_AI_API_KEY,
 };
 
 export default env;
