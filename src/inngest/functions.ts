@@ -18,19 +18,19 @@ const summaryAgent = createAgent({
 
 Use the following markdown structure for every output:
 
-### Overview
+# Overview
 Provide a detailed, engaging summary of the session's content. Focus on major features, user workflows, and any key takeaways. Write in a narrative style, using full sentences. Highlight unique or powerful aspects of the product, platform, or discussion.
 
-### Notes
+# Notes
 Break down key content into thematic sections with timestamp ranges. Each section should summarize key points, actions, or demos in bullet format.
 
 Example:
-#### Section Name
+## Section Name
 - Main point or demo shown here
 - Another key insight or interaction
 - Follow-up tool or explanation provided
 
-#### Next Section
+## Next Section
 - Feature X automatically does Y
 - Mention of integration with Z`.trim(),
   model: openai({ model: "gpt-4o", apiKey: env.openAiApiKey }),
@@ -78,6 +78,13 @@ export const meetingsProcessing = inngest.createFunction(
             },
           };
         }
+
+        return {
+          ...item,
+          user: {
+            name: speaker.name,
+          },
+        };
       });
     });
 
@@ -92,7 +99,8 @@ export const meetingsProcessing = inngest.createFunction(
         .set({
           summary: (output[0] as TextMessage).content as string,
           status: "completed",
-        }).where(eq(meetings.id, event.data.meetingId))
+        })
+        .where(eq(meetings.id, event.data.meetingId));
     });
   },
 );

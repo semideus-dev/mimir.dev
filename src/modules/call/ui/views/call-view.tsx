@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckIcon } from "@/components/icons";
-import MeetingsVariants from "@/modules/meetings/ui/components/meetings-variants";
+import {MeetingsVariants} from "@/modules/meetings/ui/components/meetings-variants";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";

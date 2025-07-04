@@ -15,7 +15,7 @@ export default async function MainLayout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <main className="flex h-screen w-screen flex-col">
+      <main className="flex h-full w-full flex-col">
         <AppNavbar />
         <section className="h-full border p-5 md:rounded-tl-2xl">
           {children}
