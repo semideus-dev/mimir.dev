@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/custom/navigation/app-sidebar";
 import AppNavbar from "@/components/custom/navigation/app-navbar";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default async function MainLayout({
   children,
@@ -17,7 +18,7 @@ export default async function MainLayout({
       <AppSidebar />
       <main className="flex h-full w-full flex-col">
         <AppNavbar />
-        <section className="h-full border p-5 md:rounded-tl-2xl">
+        <section className="h-screen border p-5 md:rounded-tl-2xl">
           {children}
         </section>
       </main>

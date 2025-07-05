@@ -19,6 +19,7 @@ import CustomAvatar from "@/components/custom/custom-avatar";
 import { format } from "date-fns";
 import Markdown from "react-markdown";
 import { Badge } from "@/components/ui/badge";
+import MeetingsTranscript from "./meetings-transcript";
 
 interface MeetingsVariantsProps {
   icon: React.ReactElement;
@@ -120,12 +121,6 @@ export function CompletedMeetingVariant({
               >
                 <RecordingIcon /> Recording
               </TabsTrigger>
-              <TabsTrigger
-                value="chat"
-                className="dark:hover:text-foreground dark:data-[state=active]:bg-background dark:data-[state=active]:border-b-primary dark:data-[state=active]:text-primary cursor-pointer rounded-none border-x-0 border-t-0 border-b-2"
-              >
-                <ChatIcon /> Chat
-              </TabsTrigger>
             </TabsList>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
@@ -144,11 +139,7 @@ export function CompletedMeetingVariant({
                 from the day of the meeting.
               </p>
             </div>
-            <video
-              src={data.recordingUrl!}
-              className="w-full rounded-xl"
-              controls
-            />
+            <video src={data.recordingUrl!} className="rounded-xl" controls />
           </div>
         </TabsContent>
         <TabsContent value="summary">
@@ -178,56 +169,65 @@ export function CompletedMeetingVariant({
                 {data.duration ? formatDuration(data.duration) : "No Duration"}
               </Badge>
             </div>
-            <Markdown
-              components={{
-                h1: (props) => (
-                  <h1
-                    className="text-primary px-2 my-2 border-b-2 p-1 text-2xl font-medium"
-                    {...props}
-                  />
-                ),
-                h2: (props) => (
-                  <h2 className="my-2 text-xl font-medium" {...props} />
-                ),
-                h3: (props) => (
-                  <h3 className="my-2 text-lg font-medium" {...props} />
-                ),
-                h4: (props) => (
-                  <h4 className="my-2 text-base font-medium" {...props} />
-                ),
-                h5: (props) => (
-                  <h5 className="my-2 text-sm font-medium" {...props} />
-                ),
-                h6: (props) => (
-                  <h6 className="my-2 text-xs font-medium" {...props} />
-                ),
-                p: (props) => (
-                  <p className="my-2 text-justify leading-relaxed" {...props} />
-                ),
-                ul: (props) => (
-                  <ul className="my-2 list-inside list-disc" {...props} />
-                ),
-                ol: (props) => (
-                  <ol className="my-2 list-inside list-decimal" {...props} />
-                ),
-                li: (props) => <li className="mb-1" {...props} />,
-                strong: (props) => (
-                  <strong className="font-semibold" {...props} />
-                ),
-                code: (props) => (
-                  <code className="bg-muted rounded p-1" {...props} />
-                ),
-                blockquote: (props) => (
-                  <blockquote
-                    className="my-4 border-l-4 pl-4 italic"
-                    {...props}
-                  />
-                ),
-              }}
-            >
-              {data.summary}
-            </Markdown>
+            <ScrollArea className="h-[500px]">
+              <Markdown
+                components={{
+                  h1: (props) => (
+                    <h1
+                      className="text-primary my-2 border-b-2 p-1 px-2 text-2xl font-medium"
+                      {...props}
+                    />
+                  ),
+                  h2: (props) => (
+                    <h2 className="my-2 text-xl font-medium" {...props} />
+                  ),
+                  h3: (props) => (
+                    <h3 className="my-2 text-lg font-medium" {...props} />
+                  ),
+                  h4: (props) => (
+                    <h4 className="my-2 text-base font-medium" {...props} />
+                  ),
+                  h5: (props) => (
+                    <h5 className="my-2 text-sm font-medium" {...props} />
+                  ),
+                  h6: (props) => (
+                    <h6 className="my-2 text-xs font-medium" {...props} />
+                  ),
+                  p: (props) => (
+                    <p
+                      className="my-2 text-justify leading-relaxed"
+                      {...props}
+                    />
+                  ),
+                  ul: (props) => (
+                    <ul className="my-2 list-inside list-disc" {...props} />
+                  ),
+                  ol: (props) => (
+                    <ol className="my-2 list-inside list-decimal" {...props} />
+                  ),
+                  li: (props) => <li className="mb-1" {...props} />,
+                  strong: (props) => (
+                    <strong className="font-semibold" {...props} />
+                  ),
+                  code: (props) => (
+                    <code className="bg-muted rounded p-1" {...props} />
+                  ),
+                  blockquote: (props) => (
+                    <blockquote
+                      className="my-4 border-l-4 pl-4 italic"
+                      {...props}
+                    />
+                  ),
+                }}
+              >
+                {data.summary}
+              </Markdown>
+              <ScrollBar orientation="vertical" />
+            </ScrollArea>
           </div>
+        </TabsContent>
+        <TabsContent value="transcript">
+          <MeetingsTranscript meetingId={data.id} />
         </TabsContent>
       </Tabs>
     </div>

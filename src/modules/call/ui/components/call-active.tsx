@@ -12,8 +12,9 @@ interface CallActiveProps {
 }
 
 export default function CallActive({ onLeave, meetingName }: CallActiveProps) {
-  const { useParticipants } = useCallStateHooks();
+  const { useParticipants, useCallClosedCaptions } = useCallStateHooks();
   const participants = useParticipants();
+  const closedCaptions = useCallClosedCaptions();
 
   return (
     <div className="flex h-screen flex-col items-center p-4">
@@ -39,6 +40,19 @@ export default function CallActive({ onLeave, meetingName }: CallActiveProps) {
             <p className="text-gray-500">Waiting for participants to join...</p>
           </div>
         )}
+      </div>
+      <div className="my-2 flex w-fit items-center rounded-xl border p-2">
+        {closedCaptions.map(({ user, text, start_time }) => (
+          <p
+            className="flex items-center gap-x-2 text-sm"
+            key={`${user.id}-${start_time}`}
+          >
+            <span className="text-muted-foreground font-medium">
+              {user.name}:
+            </span>
+            <span className="md:text-base">{text}</span>
+          </p>
+        ))}
       </div>
 
       {/* Call controls */}
