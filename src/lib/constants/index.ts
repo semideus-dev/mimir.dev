@@ -6,6 +6,11 @@ import {
   SettingsIcon,
 } from "@/components/icons";
 
+export const tokenData = {
+  expirationTime: Math.floor(Date.now() / 1000) + 3600,
+  issuedAt: Math.floor(Date.now() / 1000) - 60,
+};
+
 export const pagination = {
   defaultPage: 1,
   defaultPageSize: 10,
