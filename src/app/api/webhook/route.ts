@@ -16,7 +16,6 @@ import { db } from "@/lib/db";
 import { agents, meetings } from "@/lib/db/schema";
 import { streamVideo } from "@/lib/stream/video";
 import { inngest } from "@/inngest/client";
-import { name } from "@stream-io/video-react-sdk";
 
 function verifySignatureWithSDK(body: string, signature: string): boolean {
   return streamVideo.verifyWebhook(body, signature);
@@ -101,7 +100,15 @@ export async function POST(req: NextRequest) {
     });
   } else if (event === "call.session_participant_left") {
     const event = payload as CallSessionParticipantLeftEvent;
-    const meetingId = event.call_cid.split(":")[1];
+
+    const cidParts = event.call_cid.split(":");
+    if (cidParts.length < 2) {
+      return NextResponse.json(
+        { error: "Invalid call_cid format" },
+        { status: 400 },
+      );
+    }
+    const meetingId = cidParts[1];
 
     if (!meetingId) {
       return NextResponse.json({ error: "Missing meetingId" }, { status: 400 });

@@ -12,13 +12,13 @@ import CallView from "@/modules/call/ui/views/call-view";
 
 import { LoadingIcon } from "@/components/icons";
 
-interface AgentCallPops {
+interface AgentCallProps {
   params: Promise<{
     id: string;
   }>;
 }
 
-export default async function CallPage({ params }: AgentCallPops) {
+export default async function CallPage({ params }: AgentCallProps) {
   const { id } = await params;
 
   const session = await auth.api.getSession({

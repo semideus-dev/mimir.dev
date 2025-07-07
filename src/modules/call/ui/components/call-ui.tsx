@@ -17,19 +17,28 @@ export default function CallUI({ meetingName, meetingId }: CallUIProps) {
   const [show, setShow] = React.useState<"lobby" | "call" | "ended">("lobby");
 
   async function handleJoin() {
-    if (!call) return <LoadingIcon />;
+    if (!call) return;
 
-    await call.join();
-
-    setShow("call");
+    try {
+      await call.join();
+      setShow("call");
+    } catch (error) {
+      console.error("Failed to join call:", error);
+      // Could show error message or retry logic
+      // For now, stay in lobby state
+    }
   }
 
   function handleLeave() {
     if (!call) return;
 
-    call.endCall();
-
-    setShow("ended");
+    try {
+      call.endCall();
+      setShow("ended");
+    } catch (error) {
+      console.error("Failed to end call:", error);
+      setShow("ended");
+    }
   }
 
   return (

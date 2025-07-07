@@ -88,10 +88,22 @@ export const meetingsProcessing = inngest.createFunction(
       });
     });
 
-    const { output } = await summaryAgent.run(
-      "Summarize the following transcript: " +
-        JSON.stringify(transcriptWithSpeakers),
-    );
+    // const { output } = await summaryAgent.run(
+    //   "Summarize the following transcript: " +
+    //     JSON.stringify(transcriptWithSpeakers),
+    // );
+
+    const { output } = await step.run("generate-summary", async () => {
+      try {
+        return await summaryAgent.run(
+          "Summarize the following transcript: " +
+            JSON.stringify(transcriptWithSpeakers),
+        );
+      } catch (error) {
+        console.error("Failed to generate summary:", error);
+        throw new Error("Summary generation failed");
+      }
+    });
 
     await step.run("save-summary", async () => {
       await db

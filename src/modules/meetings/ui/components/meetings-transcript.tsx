@@ -25,7 +25,7 @@ export default function MeetingsTranscript({
 
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  const fitleredData = (data ?? []).filter((item) =>
+  const filteredData = (data ?? []).filter((item) =>
     item.text.toString().toLowerCase().includes(searchQuery.toLowerCase()),
   );
   return (
@@ -42,7 +42,7 @@ export default function MeetingsTranscript({
       </div>
       <ScrollArea className="h-[500px]">
         <div className="flex flex-col gap-y-4">
-          {fitleredData.map((data) => {
+          {filteredData.map((data) => {
             return (
               <div
                 key={data.start_ts}

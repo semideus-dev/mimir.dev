@@ -15,7 +15,11 @@ export default function CallProvider({
   meetingId,
   meetingName,
 }: CallProviderProps) {
-  const { data, isPending } = authClient.useSession();
+  const { data, isPending, error } = authClient.useSession();
+
+  if (error) {
+    return <div>Error loading session. Please refresh the page.</div>;
+  }
 
   if (!data || isPending) {
     return <LoadingIcon className="animate-spin" />;

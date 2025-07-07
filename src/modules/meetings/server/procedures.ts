@@ -18,7 +18,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { db } from "@/lib/db";
 
 import { agents, meetings, user } from "@/lib/db/schema";
-import { pagination, tokenData } from "@/lib/constants";
+import { pagination, generateTokenData } from "@/lib/constants";
 import {
   meetingsInsertSchema,
   meetingUpdateSchema,
@@ -126,10 +126,11 @@ export const meetingsRouter = createTRPCRouter({
       },
     ]);
 
+    const data = generateTokenData();
+
     const token = streamVideo.generateUserToken({
       user_id: ctx.userId,
-      exp: tokenData.expirationTime,
-      validity_in_seconds: tokenData.issuedAt,
+      exp: data.expirationTime,
     });
 
     return token;
@@ -156,7 +157,11 @@ export const meetingsRouter = createTRPCRouter({
       const transcript = await fetch(meeting.transcriptUrl)
         .then((res) => res.text())
         .then((text) => JSONL.parse<StreamTranscriptItem>(text))
-        .catch(() => {
+        .catch((error) => {
+          console.error(
+            `Failed to fetch transcript for meeting ${input.id}:`,
+            error,
+          );
           return [];
         });
 
@@ -217,7 +222,7 @@ export const meetingsRouter = createTRPCRouter({
         };
       });
 
-      return transcriptWithSpeakers
+      return transcriptWithSpeakers;
     }),
   create: protectedProcedure
     .input(meetingsInsertSchema)

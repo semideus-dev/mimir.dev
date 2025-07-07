@@ -139,7 +139,13 @@ export function CompletedMeetingVariant({
                 from the day of the meeting.
               </p>
             </div>
-            <video src={data.recordingUrl!} className="rounded-xl" controls />
+            {data.recordingUrl ? (
+              <video src={data.recordingUrl} className="rounded-xl" controls />
+            ) : (
+              <div className="text-muted-foreground py-8 text-center">
+                Recording not available
+              </div>
+            )}
           </div>
         </TabsContent>
         <TabsContent value="summary">
