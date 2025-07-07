@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 
 import useConfirmation from "@/hooks/use-confirmation";
 
@@ -11,14 +12,16 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 
+import {
+  CompletedMeetingVariant,
+  MeetingsVariants,
+} from "@/modules/meetings/ui/components/meetings-variants";
 import { MeetingDetailsHeader } from "@/modules/meetings/ui/components/meetings-headers";
 import { UpdateMeetingDialog } from "@/modules/meetings/ui/components/meetings-dialogs";
+
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import MeetingsVariants from "../components/meetings-variants";
 import {
   ActiveIcon,
-  CheckIcon,
   ErrorIcon,
   LoadingIcon,
   ScheduleIcon,
@@ -103,14 +106,7 @@ export default function MeetingDetailsView({ meetingId }: MeetingDetailsProps) {
           isActive
         />
       )}
-      {isCompleted && (
-        <MeetingsVariants
-          title="Completed"
-          description="The meeting has been ended by the user."
-          meetingId={meetingId}
-          icon={<CheckIcon width={80} height={80} className="text-green-500" />}
-        />
-      )}
+      {isCompleted && <CompletedMeetingVariant data={data} />}
       {isCancelled && (
         <MeetingsVariants
           title="Cancelled"
