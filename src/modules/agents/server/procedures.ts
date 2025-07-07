@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { and, count, desc, eq, ilike } from "drizzle-orm";
+import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
 
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
 import { db } from "@/lib/db";
-import { agents } from "@/lib/db/schema";
+import { agents, meetings } from "@/lib/db/schema";
 import {
   agentsInsertSchema,
   agentsUpdateSchema,
@@ -42,14 +42,19 @@ export const agentsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const { search, page, pageSize } = input;
       const data = await db
-        .select()
+        .select({
+          ...getTableColumns(agents),
+          meetingCount: sql<number>`COUNT(${meetings.id})`
+        })
         .from(agents)
+        .leftJoin(meetings, eq(agents.id, meetings.agentId))
         .where(
           and(
             eq(agents.userId, ctx.userId),
             search ? ilike(agents.name, `%${search}%`) : undefined,
           ),
         )
+        .groupBy(agents.id)
         .orderBy(desc(agents.createdAt), desc(agents.id))
         .limit(pageSize)
         .offset((page - 1) * pageSize);

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useAgentsFilter } from "@/modules/agents/hooks/use-agents-filters";
 
 import PageHeader from "@/components/custom/page-header";
@@ -42,6 +43,8 @@ export function AgentHeader() {
     });
   };
 
+  const isMobile = useIsMobile();
+
   return (
     <section className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -51,6 +54,14 @@ export function AgentHeader() {
           description="Schedule meetings with your own personalized AI bots."
         />
         <Button
+                  onClick={() => setIsOpen(true)}
+                  className="rounded-full font-semibold tracking-wide uppercase"
+                  size={isMobile ? "icon" : "default"}
+                >
+                  <AddIcon />
+                  {!isMobile && "New Agent"}
+                </Button>
+        {/* <Button
           className="border"
           variant="ghost"
           size="lg"
@@ -58,7 +69,7 @@ export function AgentHeader() {
         >
           <AddIcon />
           New Agent
-        </Button>
+        </Button> */}
       </div>
       <div className="flex items-center gap-x-1">
         <AgentsSearchFilter />

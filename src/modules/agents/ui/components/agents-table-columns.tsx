@@ -7,6 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import CustomAvatar from "@/components/custom/custom-avatar";
 
 import { DownRightIcon, MeetingIcon } from "@/components/icons";
+import { Badge } from "@/components/ui/badge";
 
 const AgentsTableColumns: ColumnDef<AgentGetMany[number]>[] = [
   {
@@ -34,13 +35,16 @@ const AgentsTableColumns: ColumnDef<AgentGetMany[number]>[] = [
   {
     accessorKey: "meetingCount",
     header: "Meeting Count",
-    cell: () => (
-      <div className="hidden w-full justify-end md:flex">
-        <div className="flex w-fit items-center gap-1 rounded-xl border p-1 px-3 font-medium">
-          <MeetingIcon className="text-primary mr-1" width={20} height={20} />
-          <span>5</span>
-          <span>meetings</span>
-        </div>
+    cell: ({ row }) => (
+      <div className="hidden items-center justify-end gap-x-1 md:flex">
+        <Badge
+          variant="outline"
+          className="text-muted-foreground text-base capitalize [&>svg]:size-4"
+        >
+          <MeetingIcon />
+          <span>{row.original.meetingCount}</span>
+          <span>{row.original.meetingCount == 1 ? "Meeting" : "Meetings"}</span>
+        </Badge>
       </div>
     ),
   },

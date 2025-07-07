@@ -52,7 +52,7 @@ export default function CallLobby({ onJoin }: CallLobbyProps) {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <div className="flex h-fit w-[40%] flex-col items-center justify-center gap-4 rounded-xl border p-4">
+      <div className="flex h-fit w-[90%] flex-col items-center justify-center gap-4 rounded-xl border p-4 md:w-[40%]">
         <span className="text-3xl font-medium">Ready to join?</span>
         <span className="text-muted-foreground">
           Set up your call before joining.
