@@ -6,6 +6,12 @@ import {
   SettingsIcon,
 } from "@/components/icons";
 
+export const freePlan = {
+  freeAgents: 1,
+  freeMeetings: 3,
+  meetingTimeLimitInSeconds: 600,
+};
+
 export const tokenData = {
   expirationTime: Math.floor(Date.now() / 1000) + 3600,
   issuedAt: Math.floor(Date.now() / 1000) - 60,

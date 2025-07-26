@@ -12,6 +12,8 @@ const env = {
   streamSecret: process.env.STREAM_SECRET,
 
   openAiApiKey: process.env.OPEN_AI_API_KEY,
+
+  polarAccessToken: process.env.POLAR_ACCESS_TOKEN,
 };
 
 export default env;
